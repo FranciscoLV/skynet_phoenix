@@ -26,10 +26,14 @@ defmodule Skynet do
 
   def list_terminators() do
     DynamicSupervisor.which_children(__MODULE__)
-    |> Enum.map(fn x -> Phoenix.HTML.Safe.to_iodata(elem(x, 1)) end)
+    |> Enum.map(fn x -> elem(x, 1) end)
   end
 
   defimpl Phoenix.HTML.Safe, for: PID do
     def to_iodata(pid), do: Kernel.inspect(pid)
+  end
+
+  defimpl String.Chars, for: PID do
+    def to_string(pid), do: Kernel.inspect(pid)
   end
 end

@@ -4,20 +4,24 @@ defmodule SkynetPhoenixWeb.SkynetLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    if connected?(socket), do: PubSub.subscribe(SkynetPhoenix.PubSub, :terminators_update)
+    if connected?(socket), do: PubSub.subscribe(SkynetPhoenix.PubSub, "termiantors_update")
     {:ok, fetch(socket)}
   end
 
   @impl true
-  def handle_event("killTerminator", %{"p" => terminator}, socket) do
+  def handle_event("killTerminator", %{"terminator" => terminator}, socket) do
     terminator
+    |> IO.inspect()
     |> pid_from_string()
+    |> IO.inspect()
     |> Skynet.kill_terminator()
+    |> IO.inspect()
 
     {:noreply, fetch(socket)}
   end
 
   def fetch(socket) do
+    # IO.inspect(Skynet.list_terminators())
     assign(socket, terminators: Skynet.list_terminators())
   end
 

@@ -10,7 +10,7 @@ defmodule Skynet.Terminator do
   @impl GenServer
   def init(_) do
     Process.send_after(self(), :respawn, @five_seconds)
-    Process.send_after(self(), :sarahconnor, @ten_seconds)
+    # Process.send_after(self(), :sarahconnor, @ten_seconds)
     {:ok, nil}
   end
 
