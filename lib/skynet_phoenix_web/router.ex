@@ -15,11 +15,11 @@ defmodule SkynetPhoenixWeb.Router do
   end
 
   scope "/", SkynetPhoenixWeb do
-    # pipe_through :browser
+    pipe_through :browser
 
-    # live "/", PageLive, :index
+    live "/", PageLive, :index
 
-    live "/", SkynetLive, :index
+    live "/skynet", SkynetLive, :index
   end
 
   # Other scopes may use custom stacks.

@@ -1,6 +1,9 @@
 defmodule Skynet do
-  # Automatically defines child_spec/1
   use DynamicSupervisor
+
+  # alias Phoenix.PubSub
+
+  @pubsub_topic "terminators_update"
 
   def start_link(init_arg) do
     DynamicSupervisor.start_link(__MODULE__, init_arg, name: __MODULE__)
@@ -17,10 +20,17 @@ defmodule Skynet do
       start: {Skynet.Terminator, :spawn, [state: 1]}
     }
 
+    Phoenix.PubSub.broadcast(
+      SkynetPhoenix.PubSub,
+      @pubsub_topic,
+      {:spawn_terminator, child_spec.id}
+    )
+
     DynamicSupervisor.start_child(__MODULE__, child_spec)
   end
 
   def kill_terminator(id) do
+    Phoenix.PubSub.broadcast(SkynetPhoenix.PubSub, @pubsub_topic, {:kill_terminator, id})
     DynamicSupervisor.terminate_child(__MODULE__, id)
   end
 

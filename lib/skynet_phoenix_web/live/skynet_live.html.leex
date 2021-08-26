@@ -1,6 +1,7 @@
+<button phx-click="spawnTerminator">Spawn Terminator</button>
 <h1> Alive Terminators </h1>
 <%= for terminator <- @terminators do %>
 <li>
- <button  phx-click="kill"> <%= terminator %> </button>
+ <button  phx-click="killTerminator" phx-value-terminator="<%=terminator%>"> <%= terminator %> </button>
 </li>
 <% end %>
