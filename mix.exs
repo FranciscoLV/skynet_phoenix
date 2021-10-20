@@ -24,6 +24,10 @@ defmodule SkynetPhoenix.MixProject do
     ]
   end
 
+  # def deps do
+  #   [{:commanded, "~> 1.3"}]
+  # end
+
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
@@ -46,7 +50,9 @@ defmodule SkynetPhoenix.MixProject do
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:commanded, "~> 1.3"},
+      {:commanded_eventstore_adapter, "~> 1.2"}
     ]
   end
 
