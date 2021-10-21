@@ -2,13 +2,14 @@ defmodule SkynetPhoenixWeb.SkynetLive do
   use SkynetPhoenixWeb, :live_view
 
   # alias Phoenix.PubSub
-
+  alias SkynetPhoenix.Commanded.Terminators.Commands.SpawnTerminator
   @impl true
   def mount(_params, _session, socket) do
     if connected?(socket),
       do: Phoenix.PubSub.subscribe(SkynetPhoenix.PubSub, "terminators_update")
 
-    {:ok, fetch(socket)}
+    socket = fetch(socket) |> assign(skynet_id: UUID.uuid1())
+    {:ok, socket}
   end
 
   @impl true
@@ -21,8 +22,11 @@ defmodule SkynetPhoenixWeb.SkynetLive do
   end
 
   def handle_event("spawnTerminator", _value, socket) do
-    {:ok, pid} = Skynet.spawn_terminator()
-    {:noreply, assign(socket, terminators: [pid | socket.assigns.terminators])}
+    # {:ok, pid} = C.SpawnTerminator
+    :ok =
+      SkynetPhoenix.Commanded.Application.dispatch(%SpawnTerminator{id: socket.assigns.skynet_id})
+
+    {:noreply, assign(socket, terminators: [socket.assigns.terminators])}
   end
 
   @impl true

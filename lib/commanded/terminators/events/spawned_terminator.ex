@@ -1,4 +1,4 @@
-defmodule SkynetPhoenix.Commanded.Events.SpanwnedTerminator do
+defmodule SkynetPhoenix.Commanded.Events.SpawnedTerminator do
   @derive Jason.Encoder
-  defstruct [:id]
+  defstruct [:pid]
 end

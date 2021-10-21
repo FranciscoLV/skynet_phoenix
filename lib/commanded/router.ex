@@ -5,6 +5,6 @@ defmodule SkynetPhoenix.Commanded.Router do
   alias SkynetPhoenix.Commanded.Terminators.Handlers, as: H
   alias SkynetPhoenix.Commanded.Terminators.Commands, as: C
 
-  dispatch(C.SpawnTerminator, to: H.TerminatosHandler, aggregate: Terminator, identity: :id)
-  dispatch(C.KillTerminator, to: H.TerminatosHandler, aggregate: Terminator, identity: :id)
+  dispatch(C.SpawnTerminator, to: H.TerminatorsHandler, aggregate: Terminator, identity: :id)
+  dispatch(C.KillTerminator, to: H.TerminatorsHandler, aggregate: Terminator, identity: :id)
 end

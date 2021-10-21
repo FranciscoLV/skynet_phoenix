@@ -17,7 +17,8 @@ defmodule SkynetPhoenix.Application do
       SkynetPhoenixWeb.Endpoint,
       # Start a worker by calling: SkynetPhoenix.Worker.start_link(arg)
       # {SkynetPhoenix.Worker, arg}
-      {DynamicSupervisor, strategy: :one_for_one, name: Skynet}
+      {DynamicSupervisor, strategy: :one_for_one, name: Skynet},
+      SkynetPhoenix.Commanded.Application
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

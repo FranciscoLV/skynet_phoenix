@@ -46,4 +46,12 @@ defmodule Skynet do
   defimpl String.Chars, for: PID do
     def to_string(pid), do: Kernel.inspect(pid)
   end
+
+  defimpl Jason.Encoder, for: PID do
+    def encode(pid, _), do: Kernel.to_string(pid) |> String.trim("#")
+  end
+
+  # defimpl Jason.Decoder, for: PID do
+  #   def decode!(pid, _), do: Kernel.inspect(pid)
+  # end
 end

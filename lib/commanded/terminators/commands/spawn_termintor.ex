@@ -1,3 +1,3 @@
 defmodule SkynetPhoenix.Commanded.Terminators.Commands.SpawnTerminator do
-  defstruct [:terminators]
+  defstruct [:id]
 end
