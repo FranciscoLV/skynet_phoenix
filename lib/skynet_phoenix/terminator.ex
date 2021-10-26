@@ -5,9 +5,10 @@ defmodule Skynet.Terminator do
   @ten_seconds 10000
 
   def start_link(__MODULE__, init_arg) do
+    IO.inspect("hello")
     application_name = Keyword.fetch!(init_arg, :name)
     name = {:via, Registry, {SkynetPhoenix.Terminator.Registry, application_name}}
-    GenServer.start_link(SkynetPhoenix.Terminator.Registry, name)
+    {:ok, _} = GenServer.start_link(SkynetPhoenix.Terminator.Registry, name)
   end
 
   @impl GenServer

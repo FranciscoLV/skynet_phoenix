@@ -6,6 +6,7 @@ defmodule Skynet do
   @pubsub_topic "terminators_update"
 
   def start_link(init_arg) do
+    {:ok, _} = Registry.start_link(keys: :unique, name: Registry.ViaTest)
     DynamicSupervisor.start_link(__MODULE__, init_arg, name: __MODULE__)
   end
 
@@ -54,4 +55,13 @@ defmodule Skynet do
   # defimpl Jason.Decoder, for: PID do
   #   def decode!(pid, _), do: Kernel.inspect(pid)
   # end
+
+  def alive?(pid) do
+    IO.inspect(Registry.lookup(SkynetPhoenix.Terminator.Registry, pid))
+
+    case Registry.lookup(SkynetPhoenix.Terminator.Registry, pid) do
+      [] -> false
+      [{_pid, _}] -> true
+    end
+  end
 end
