@@ -5,10 +5,9 @@ defmodule Skynet.Terminator do
   @ten_seconds 10000
 
   def start_link(__MODULE__, init_arg) do
-    IO.inspect("hello")
     application_name = Keyword.fetch!(init_arg, :name)
     name = {:via, Registry, {SkynetPhoenix.Terminator.Registry, application_name}}
-    {:ok, _} = GenServer.start_link(SkynetPhoenix.Terminator.Registry, name)
+    GenServer.start_link(SkynetPhoenix.Terminator.Registry, name)
   end
 
   @impl GenServer
@@ -50,6 +49,17 @@ defmodule Skynet.Terminator do
       _ ->
         Process.send_after(self(), :sarahconnor, @ten_seconds)
         {:noreply, state}
+    end
+  end
+
+  defimpl Jason.Encoder, for: PID do
+    def encode(pid, _), do: Kernel.to_string(pid)
+  end
+
+  def alive?(pid) do
+    case Registry.lookup(SkynetPhoenix.Terminator.Registry, pid) do
+      [] -> false
+      [{_pid, _}] -> true
     end
   end
 end

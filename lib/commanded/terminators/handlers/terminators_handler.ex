@@ -16,7 +16,6 @@ defmodule SkynetPhoenix.Commanded.Terminators.Handlers.TerminatorsHandler do
   def handle(%Terminator{}, %C.SpawnTerminator{}) do
     {:ok, pid} = Skynet.spawn_terminator()
     spawned_terminator = %E.SpawnedTerminator{pid: pid}
-
     [spawned_terminator]
   end
 end

@@ -22,7 +22,6 @@ defmodule SkynetPhoenixWeb.SkynetLive do
   end
 
   def handle_event("spawnTerminator", _value, socket) do
-    # {:ok, pid} = C.SpawnTerminator
     :ok =
       SkynetPhoenix.Commanded.Application.dispatch(%SpawnTerminator{id: socket.assigns.skynet_id})
 
