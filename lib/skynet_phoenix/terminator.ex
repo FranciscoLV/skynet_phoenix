@@ -4,8 +4,8 @@ defmodule Skynet.Terminator do
   @five_seconds 5000
   @ten_seconds 10000
 
-  def start_link(__MODULE__, init_arg) do
-    application_name = Keyword.fetch!(init_arg, :name)
+  def start_link(opts \\ []) do
+    application_name = Keyword.fetch!(opts, :name)
     name = {:via, Registry, {SkynetPhoenix.Terminator.Registry, application_name}}
     GenServer.start_link(SkynetPhoenix.Terminator.Registry, name)
   end
@@ -17,8 +17,10 @@ defmodule Skynet.Terminator do
     {:ok, nil}
   end
 
-  def spawn(_) do
-    GenServer.start_link(__MODULE__, nil, [])
+  def spawn(opts \\ []) do
+    uuid = Keyword.fetch!(opts, :name)
+    name = {:via, Registry, {SkynetPhoenix.Terminator.Registry, uuid}}
+    GenServer.start_link(__MODULE__, nil, name: name)
   end
 
   @impl GenServer

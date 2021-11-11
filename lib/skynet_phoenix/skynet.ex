@@ -14,7 +14,7 @@ defmodule Skynet do
     DynamicSupervisor.init(strategy: :one_for_one)
   end
 
-  def spawn_terminator() do
+  def spawn_terminator(opts \\ []) do
     child_spec = %{
       id: Skynet.Terminator,
       start: {Skynet.Terminator, :spawn, [state: 1]}
